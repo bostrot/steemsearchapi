@@ -110,7 +110,7 @@ function runRequests(hashList) {
             if (res.statusCode != 200 && res.statusCode != 206) {
                 // If not remove it from the DB
                 db.prepare("DELETE from search where id = $id").run({
-                    id: _allRows[i]["id"]
+                    id: task.id
                 });
                 removed++;
                 log("Removed dead Video.");
