@@ -29,7 +29,8 @@ var async = require("async");
 function findVideos(posts) {
     for (var i in posts) {
         updatePosts("get_discussions_by_blog", function (s) {
-            log("Added " + s + " entrie(s).");
+            if (s > 0)
+                log("Added " + s + " entrie(s).");
         }, posts[i]["author"])
     }
 }
@@ -102,27 +103,26 @@ async function checkOnline() {
 
 function runRequests(hashList) {
     // TODO: doesn't work that well, figure something out
-    log(hashList.length)
     // Create async task with 100 concurrent tasks
     var q = async.queue(function (task, callback) {
         // Request http head and check whether succeed
-        request.head(task.url, function (err, res, body) {
-            if (res.statusCode != 200 && res.statusCode != 206) {
+        request.head(task.url, {timeout: 100}, function (err, res, body) {
+            if (res == undefined || res.statusCode == undefined || res.statusCode != 200 && res.statusCode != 206) {
                 // If not remove it from the DB
                 db.prepare("DELETE from search where id = $id").run({
                     id: task.id
                 });
                 removed++;
-                log("Removed dead Video.");
+                //log("Removed dead Video.");
                 callback("remove");
             } else {
                 // Just keep it in the db
-                log("Video alive. Skip.");
+                //log("Video alive. Skip.");
                 kept++;
                 callback("keep");
             };
         });
-    }, 100);
+    }, 1);
 
     // Add url hashlist to queue
     q.push(hashList, function (err) {});
@@ -158,7 +158,8 @@ var minutes = 1,
     interval = minutes * 60 * 1000;
 setInterval(function () {
     updatePosts("get_discussions_by_created", function (s) {
-        log("Added " + s + " entrie(s).");
+        if (s > 0)
+            log("Added " + s + " entrie(s).");
     });
 }, interval);
 
@@ -174,7 +175,9 @@ var credentials = {
 
 // api endpoint
 var express = require('express');
+var lastSearch;
 const app = express();
+// allow cross origin
 app.use(cors());
 app.get('/search', function (req, res) {
     // handle escaped spaces
@@ -185,7 +188,10 @@ app.get('/search', function (req, res) {
 
     if (searchQuery !== "") {
         search(searchQuery, function (result) {
-            log(searchQuery + " " + req.originalUrl + " " + result.length);
+            // prevent search log spam
+            if (lastSearch != searchQuery)
+                log(searchQuery + " " + req.originalUrl + " " + result.length);
+            lastSearch = searchQuery;
             res.json({
                 result: result,
             });
