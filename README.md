@@ -9,12 +9,15 @@ https://dtubeapp.cf:2053/search?q=test
 Where the keyword 'test' is being searched in the whole json_metadata key. You can search for videohashes, permlinks, author, description and so on.
 
 # How it works
-It indexes new posts every minute and once a day every post from every author. This data is written into a SQLite DB. A cleanup of dead videos was intended but removed for now.
+It indexes new posts every minute and once a day every post from every author. This data is written into a SQLite DB. A cleanup of dead videos was intended but removed for now. All posts that do not have a videohash key will be ignored and deleted.
 
 # GUI
 https://bostrot.github.io/steemsearchapi/
 
 Here is a simple graphic interface that lets you search our database
+
+# TODO
+Check whether the video up checker works. If not make it working.
 
 # Limitation
 As it uses a SQLite Database there are some limitations: json_metadata and every other key is returned as an escaped string.
