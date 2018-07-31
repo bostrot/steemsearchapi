@@ -1,4 +1,4 @@
-# steemsearchapi
+# [steemsearchapi](https://github.com/bostrot/steemsearchapi)
 A Steem Search/Indexing API mainly built for DTube.
 
 <img src="https://i.imgur.com/NnjDNRm.png"></img>
