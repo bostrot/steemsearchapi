@@ -76,7 +76,7 @@
 		searchBTN.addEventListener('click', function () {
 			$("#results").html("");
 			document.getElementById('results').style.height = '100%';
-			fetch("https://dtubeapp.cf:2053/search?q=" + document.getElementById("name").value)
+			fetch("https://afternoon-citadel-61886.herokuapp.com/search?q=" + document.getElementById("name").value)
 				.then(function (response) {
 					return response.json();
 				})
