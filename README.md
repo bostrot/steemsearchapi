@@ -25,3 +25,13 @@ As it uses a SQLite Database there are some limitations: json_metadata and every
 Posts will not contain every key from the steemit api. Here is a list of keys that are included. The green ones are commented out and will not be transmitted as they either are dynamic ones or I just don't think they are needed:
 
 <img src="https://i.imgur.com/ninmk7t.png"></img>
+
+## Help
+
+You are welcome to contribute with pull requests, bug reports, ideas and donations.
+
+Bitcoin: [1ECPWeTCq93F68BmgYjUgGSV11XuzSPSeM](https://www.blockchain.com/btc/payment_request?address=1ECPWeTCq93F68BmgYjUgGSV11XuzSPSeM&currency=USD&nosavecurrency=true&message=Bostrot)
+
+PayPal: [paypal.me/bostrot](https://paypal.me/bostrot)
+
+Hosting: [2.50$ VPS at VULTR](https://www.vultr.com/?ref=7505919)
